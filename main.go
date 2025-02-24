@@ -11,6 +11,25 @@ type Supplier struct {
 	Name, City string
 }
 
+type ProductList  []Product
+type ProductListP []*Product
+
+func (products ProductList) printNames() {
+	for _, p := range products {
+		fmt.Println("Name:", p.Name)
+	}
+}
+
+func (products *ProductListP) printNames() {
+	for _, p := range *products {
+		fmt.Println("Name:", p.Name)
+	}
+}
+
+func (p Product) test() {
+	fmt.Println("Name:", p.Name, "Category:", p.Category, "Price:", p.Price)
+}
+
 
 func (s *Supplier) printDetails() {
 	fmt.Println("Supplier:", s.Name, "City:", s.City)
@@ -57,4 +76,22 @@ func main() {
 	for _, s := range suppliers {
 		s.printDetails()
 	}
+
+	// chamando via o type e passando o receiver explicitamente
+	(*Supplier).printDetails(&Supplier{Name: "Acme Co", City: "New York"})
+	Product.test(Product{Name: "Kayak", Category: "Watersports", Price: 275})
+
+	productList := ProductList{
+		Product{Name: "Name is Kayak", Category: "Watersports", Price: 275},
+		Product{Name: "Name is Lifejacket", Category: "Watersports", Price: 48.95},
+		Product{Name: "Name is Soccer Ball", Category: "Soccer", Price: 19.50},
+	}
+
+	productListP := ProductListP{
+		&productList[0], &productList[1], &productList[2],
+	}
+
+	productList.printNames()
+	productListP.printNames()
+
 }
