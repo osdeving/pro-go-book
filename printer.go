@@ -3,6 +3,6 @@ package main
 import "fmt"
 
 func Printfln(template string, values ...interface{}) {
-	fmt.Printf(template + "\n", values...)
+	fmt.Printf(template+"\n", values...)
 }
 
